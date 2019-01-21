@@ -39,18 +39,18 @@
         </ListView>
         <Button ToolTip="Upload an item to the server" Width="50" Height="50" MouseDoubleClick="Upload_DoubleClick" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0" Grid.Column="0" Background="#FF333333" BorderBrush="Black" Foreground="#FFDDDDDD">
             <Button.Content>
-                <Image Source="/uploadImage.png"/>
+                <Image Source="/Images/uploadImage.png"/>
             </Button.Content>
         </Button>
         <Button ToolTip="Reload the displayed items. For example after adding an item from an other client" Width="50" Height="50" MouseDoubleClick="Reload_DoubleClick" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0" Grid.Column="0" Background="#FF333333" BorderBrush="Black" Foreground="#FFDDDDDD" Margin="53,0,0,0">
             <Button.Content>
-                <Image Source="/reload.png"/>
+                <Image Source="/Images/reload.png"/>
             </Button.Content>
         </Button>
         <Button Width="50" Height="50" MouseDoubleClick="Delete_DoubleClick" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0" Grid.Column="0" Background="#FF333333" BorderBrush="Black" Foreground="#FFDDDDDD" Margin="106
                 ,0,0,0">
             <Button.Content>
-                <Image Source="/delete.png"/>
+                <Image Source="/Images/delete.png"/>
             </Button.Content>
         </Button>
     </Grid>

@@ -44,17 +44,17 @@
 
         <Button HorizontalAlignment="Right" Margin="0,3,3,0" VerticalAlignment="Top" Width="22" Height="22" Click="Close" BorderBrush="{x:Null}" Foreground="{x:Null}" Background="{x:Null}">
             <StackPanel>
-                <Image Source="close.png"></Image>
+                <Image Source="/Images/close.png"></Image>
             </StackPanel>
         </Button>
         <Button HorizontalAlignment="Right" Margin="0,3,25,0" VerticalAlignment="Top" Width="22" Height="22" Click="Maximize" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}">
             <StackPanel>
-                <Image Source="Maximize.png"/>
+                <Image Source="/Images/Maximize.png"/>
             </StackPanel>
         </Button>
         <Button HorizontalAlignment="Right" Margin="0,3,47,0" VerticalAlignment="Top" Width="22" Height="22" Click="Minimize" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}">
             <StackPanel>
-                <Image Source="Minimize.png"/>
+                <Image Source="/Images/Minimize.png"/>
             </StackPanel>
         </Button>
         <Label x:Name="windowTitle" Content="Rftp" HorizontalAlignment="Left" VerticalAlignment="Top" Height="28" Width="66" Foreground="White" FontWeight="Bold" FontSize="14"/>

@@ -127,13 +127,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="close.png" />
+    <Resource Include="Images\close.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Maximize.png" />
+    <Resource Include="Images\Maximize.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Minimize.png" />
+    <Resource Include="Images\Minimize.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RftpLib\RftpLib.csproj">
@@ -142,13 +142,13 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="uploadImage.png" />
+    <Resource Include="Images\uploadImage.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="reload.png" />
+    <Resource Include="Images\reload.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="delete.png" />
+    <Resource Include="Images\delete.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
