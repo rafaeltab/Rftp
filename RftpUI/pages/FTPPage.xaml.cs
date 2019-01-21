@@ -47,19 +47,37 @@ namespace RftpUI.pages
         {
             MainWindow mw = (MainWindow) Window.GetWindow(this);
             user = mw.u;
-
-            DisplayName.Content = user.Username;
-            DisplayName.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
-            double tw = DisplayName.DesiredSize.Width;
-
-            AccDisplayColumn.Width = new GridLength(tw + 20);
-            AccDisplay.Width = tw + 20;
-
-            currentDisplayItems = client.GetListing(currentRoot);
-            currentDisplayItems = (from item in currentDisplayItems orderby item.FullName select item).ToArray();
-            foreach (var item in currentDisplayItems)
+            if (user.CorrectUser)
             {
-                FileDisplayPort.Items.Add(new Item { Name = item.FullName, Type = item.Type.ToString(), Modified = item.Modified});
+                if (user.AuthorityLevel >= 1)
+                {
+                    removeBtn.Visibility = Visibility.Visible;
+                    uploadBtn.Visibility = Visibility.Visible;
+                    reloadBtn.Visibility = Visibility.Visible;
+
+                    FileDisplayPort.Visibility = Visibility.Visible;
+                    topBar.Visibility = Visibility.Visible;
+                    AccDisplay.Visibility = Visibility.Visible;
+                    DisplayName.Visibility = Visibility.Visible;
+
+                    DisplayName.Content = user.Username;
+                    DisplayName.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
+                    double tw = DisplayName.DesiredSize.Width;
+
+                    AccDisplayColumn.Width = new GridLength(tw + 20);
+                    AccDisplay.Width = tw + 20;
+
+                    currentDisplayItems = client.GetListing(currentRoot);
+                    currentDisplayItems = (from item in currentDisplayItems orderby item.FullName select item).ToArray();
+                    foreach (var item in currentDisplayItems)
+                    {
+                        FileDisplayPort.Items.Add(new Item { Name = item.FullName, Type = item.Type.ToString(), Modified = item.Modified });
+                    }
+                }
+                else
+                {
+                    LowPermsWarn.Visibility = Visibility.Visible;
+                }
             }
         }
 

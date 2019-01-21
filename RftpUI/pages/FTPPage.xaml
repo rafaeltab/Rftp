@@ -20,10 +20,10 @@
 
         </Grid.RowDefinitions>
 
-        <Rectangle Fill="#FF444444" Height="50" VerticalAlignment="Top" Grid.Row="0"  Grid.ColumnSpan="2"/>
-        <Rectangle x:Name="AccDisplay" Fill="#FF505050" Height="50" Width="150" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Row="0" Grid.Column="1"/>
-        <Label Content="Hey" x:Name="DisplayName" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" FontWeight="Bold" FontSize="18"/>
-        <ListView x:Name="FileDisplayPort" Grid.Row="1" Grid.ColumnSpan="2" Background="#FF555555" Foreground="#FFDDDDDD" BorderBrush="#FF222222">
+        <Rectangle Visibility="Hidden" x:Name="topBar" Fill="#FF444444" Height="50" VerticalAlignment="Top" Grid.Row="0"  Grid.ColumnSpan="2"/>
+        <Rectangle Visibility="Hidden" x:Name="AccDisplay" Fill="#FF505050" Height="50" Width="150" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Row="0" Grid.Column="1"/>
+        <Label Visibility="Hidden" Content="Hey" x:Name="DisplayName" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" FontWeight="Bold" FontSize="18"/>
+        <ListView x:Name="FileDisplayPort" Visibility="Hidden" Grid.Row="1" Grid.ColumnSpan="2" Background="#FF555555" Foreground="#FFDDDDDD" BorderBrush="#FF222222">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Name" Width="150" DisplayMemberBinding="{Binding Name}" />
@@ -37,21 +37,25 @@
                 </Style>
             </ListView.ItemContainerStyle>
         </ListView>
-        <Button ToolTip="Upload an item to the server" Width="50" Height="50" MouseDoubleClick="Upload_DoubleClick" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0" Grid.Column="0" Background="#FF333333" BorderBrush="Black" Foreground="#FFDDDDDD">
+        <Button x:Name="uploadBtn" Visibility="Hidden" ToolTip="Upload an item to the server" Width="50" Height="50" MouseDoubleClick="Upload_DoubleClick" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0" Grid.Column="0" Background="#FF333333" BorderBrush="Black" Foreground="#FFDDDDDD">
             <Button.Content>
                 <Image Source="/Images/uploadImage.png"/>
             </Button.Content>
         </Button>
-        <Button ToolTip="Reload the displayed items. For example after adding an item from an other client" Width="50" Height="50" MouseDoubleClick="Reload_DoubleClick" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0" Grid.Column="0" Background="#FF333333" BorderBrush="Black" Foreground="#FFDDDDDD" Margin="53,0,0,0">
+        <Button x:Name="reloadBtn" Visibility="Hidden" ToolTip="Reload the displayed items. For example after adding an item from an other client" Width="50" Height="50" MouseDoubleClick="Reload_DoubleClick" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0" Grid.Column="0" Background="#FF333333" BorderBrush="Black" Foreground="#FFDDDDDD" Margin="53,0,0,0">
             <Button.Content>
                 <Image Source="/Images/reload.png"/>
             </Button.Content>
         </Button>
-        <Button Width="50" Height="50" MouseDoubleClick="Delete_DoubleClick" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0" Grid.Column="0" Background="#FF333333" BorderBrush="Black" Foreground="#FFDDDDDD" Margin="106
+        <Button x:Name="removeBtn" Visibility="Hidden" Width="50" Height="50" MouseDoubleClick="Delete_DoubleClick" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0" Grid.Column="0" Background="#FF333333" BorderBrush="Black" Foreground="#FFDDDDDD" Margin="106
                 ,0,0,0">
             <Button.Content>
                 <Image Source="/Images/delete.png"/>
             </Button.Content>
         </Button>
+        <Label Content="You're account is correctly created. However, you don't have permissions to do anything yet. Your permissions will be evaluated soon." x:Name="LowPermsWarn" Visibility="Hidden" Foreground="#FFDDDDDD" HorizontalAlignment="Center" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
+
+
+
     </Grid>
 </Page>
