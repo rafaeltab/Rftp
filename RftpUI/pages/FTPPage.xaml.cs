@@ -75,7 +75,11 @@ namespace RftpUI.pages
                     currentDisplayItems = (from item in currentDisplayItems orderby item.FullName select item).ToArray();
                     foreach (var item in currentDisplayItems)
                     {
-                        FileDisplayPort.Items.Add(new Item { Icon = IconReader.GetFileIcon(System.IO.Path.GetExtension(item.FullName),IconReader.IconSize.Large,true) ,Name = item.FullName, Type = item.Type.ToString(), Modified = item.Modified });
+                        FileDisplayPort.Items.Add(new Item {
+                            Icon = item.Type != FtpFileSystemObjectType.Directory ? IconReader.GetFileIcon(System.IO.Path.GetExtension(item.FullName),IconReader.IconSize.Large,false) : IconReader.GetFolderIcon(IconReader.IconSize.Large,IconReader.FolderType.Open) ,
+                            Name = item.FullName,
+                            Type = item.Type.ToString(),
+                            Modified = item.Modified });
                     }
                 }
                 else
@@ -168,7 +172,13 @@ namespace RftpUI.pages
             FileDisplayPort.Items.Add(new Item { Name = "..", Type = "Parent", Modified = DateTime.Now });
             foreach (var item in currentDisplayItems)
             {
-                FileDisplayPort.Items.Add(new Item { Icon = IconReader.GetFileIcon(System.IO.Path.GetExtension(item.FullName), IconReader.IconSize.Large, false), Name = item.FullName, Type = item.Type.ToString(), Modified = item.Modified });
+                FileDisplayPort.Items.Add(new Item
+                {
+                    Icon = item.Type != FtpFileSystemObjectType.Directory ? IconReader.GetFileIcon(System.IO.Path.GetExtension(item.FullName), IconReader.IconSize.Large, false) : IconReader.GetFolderIcon(IconReader.IconSize.Large, IconReader.FolderType.Open),
+                    Name = item.FullName,
+                    Type = item.Type.ToString(),
+                    Modified = item.Modified
+                });
             }           
         }
 

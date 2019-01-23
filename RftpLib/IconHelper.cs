@@ -52,7 +52,7 @@ namespace Etier.IconHelper
 		/// <param name="name">Pathname for file.</param>
 		/// <param name="size">Large or small</param>
 		/// <param name="linkOverlay">Whether to include the link icon</param>
-		/// <returns>System.Drawing.Icon</returns>
+		/// <returns>string</returns>
 		public static string GetFileIcon(string name, IconSize size, bool linkOverlay)
 		{
 			Shell32.SHFILEINFO shfi = new Shell32.SHFILEINFO();
@@ -83,10 +83,7 @@ namespace Etier.IconHelper
             string s = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\" + name.Replace(".","") + ".ico";
             try
             {
-                using (FileStream fs = new FileStream(s, FileMode.OpenOrCreate))
-                {
-                    icon.Save(fs);
-                }
+                icon.ToBitmap().Save(s);
             }
             catch (Exception e)
             {
@@ -101,8 +98,8 @@ namespace Etier.IconHelper
 		/// </summary>
 		/// <param name="size">Specify large or small icons.</param>
 		/// <param name="folderType">Specify open or closed FolderType.</param>
-		/// <returns>System.Drawing.Icon</returns>
-		public static System.Drawing.Icon GetFolderIcon( IconSize size, FolderType folderType )
+		/// <returns>string</returns>
+		public static string GetFolderIcon( IconSize size, FolderType folderType )
 		{
 			// Need to add size check, although errors generated at present!
 			uint flags = Shell32.SHGFI_ICON | Shell32.SHGFI_USEFILEATTRIBUTES;
@@ -123,7 +120,7 @@ namespace Etier.IconHelper
 
 			// Get the folder icon
 			Shell32.SHFILEINFO shfi = new Shell32.SHFILEINFO();
-			Shell32.SHGetFileInfo(	null, 
+			Shell32.SHGetFileInfo(@"C:\Program Files", 
 				Shell32.FILE_ATTRIBUTE_DIRECTORY, 
 				ref shfi, 
 				(uint) System.Runtime.InteropServices.Marshal.SizeOf(shfi), 
@@ -134,9 +131,19 @@ namespace Etier.IconHelper
 			// Now clone the icon, so that it can be successfully stored in an ImageList
 			System.Drawing.Icon icon = (System.Drawing.Icon)System.Drawing.Icon.FromHandle(shfi.hIcon).Clone();
 
-			User32.DestroyIcon( shfi.hIcon );		// Cleanup
-			return icon;
-		}	
+			User32.DestroyIcon( shfi.hIcon );       // Cleanup
+            string s = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\xxxFOLDERxxx.ico";
+            try
+            {                
+                icon.ToBitmap().Save(s);                
+            }
+            catch (Exception e)
+            {
+
+            }
+
+            return s;
+        }	
 	}
 
 	/// <summary>
