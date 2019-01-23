@@ -18,6 +18,10 @@ using System.Net;
 using System.IO;
 using Microsoft.Win32;
 using System.Text.RegularExpressions;
+using System.Drawing;
+using Etier.IconHelper;
+
+
 
 namespace RftpUI.pages
 {
@@ -61,17 +65,17 @@ namespace RftpUI.pages
                     DisplayName.Visibility = Visibility.Visible;
 
                     DisplayName.Content = user.Username;
-                    DisplayName.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
+                    DisplayName.Measure(new System.Windows.Size(double.PositiveInfinity, double.PositiveInfinity));
                     double tw = DisplayName.DesiredSize.Width;
 
                     AccDisplayColumn.Width = new GridLength(tw + 20);
-                    AccDisplay.Width = tw + 20;
+                    AccDisplay.Width = tw + 20;                    
 
                     currentDisplayItems = client.GetListing(currentRoot);
                     currentDisplayItems = (from item in currentDisplayItems orderby item.FullName select item).ToArray();
                     foreach (var item in currentDisplayItems)
                     {
-                        FileDisplayPort.Items.Add(new Item { Name = item.FullName, Type = item.Type.ToString(), Modified = item.Modified });
+                        FileDisplayPort.Items.Add(new Item { Icon = IconReader.GetFileIcon(System.IO.Path.GetExtension(item.FullName),IconReader.IconSize.Large,true) ,Name = item.FullName, Type = item.Type.ToString(), Modified = item.Modified });
                     }
                 }
                 else
@@ -164,7 +168,7 @@ namespace RftpUI.pages
             FileDisplayPort.Items.Add(new Item { Name = "..", Type = "Parent", Modified = DateTime.Now });
             foreach (var item in currentDisplayItems)
             {
-                FileDisplayPort.Items.Add(new Item { Name = item.FullName, Type = item.Type.ToString(), Modified = item.Modified });
+                FileDisplayPort.Items.Add(new Item { Icon = IconReader.GetFileIcon(System.IO.Path.GetExtension(item.FullName), IconReader.IconSize.Large, false), Name = item.FullName, Type = item.Type.ToString(), Modified = item.Modified });
             }           
         }
 
@@ -176,6 +180,7 @@ namespace RftpUI.pages
 
     public class Item
     {
+        public string Icon { get; set; }
         public string Name { get; set; }
         public string Type { get; set; }
         public DateTime Modified { get; set; }
