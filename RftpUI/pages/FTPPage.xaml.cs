@@ -30,6 +30,8 @@ namespace RftpUI.pages
     /// </summary>
     public partial class FTPPage : Page
     {
+        public string sortby = "name";
+
         private FtpClient client;
         private FtpListItem[] currentDisplayItems;
         public User user;
@@ -72,13 +74,38 @@ namespace RftpUI.pages
                     AccDisplay.Width = tw + 20;                    
 
                     currentDisplayItems = client.GetListing(currentRoot);
+
+                    switch (sortby)
+                    {
+                        case "name":
+                            currentDisplayItems = (from item in currentDisplayItems orderby item.FullName descending select item).ToArray();
+                            break;
+                        case "-name":
+                            currentDisplayItems = (from item in currentDisplayItems orderby item.FullName ascending select item).ToArray();
+                            break;
+                        case "type":
+                            currentDisplayItems = (from item in currentDisplayItems orderby (item.Type != FtpFileSystemObjectType.Directory ? IconReader.GetDescription(System.IO.Path.GetExtension(item.FullName)) : "Directory") descending select item).ToArray();
+                            break;
+                        case "-type":
+                            currentDisplayItems = (from item in currentDisplayItems orderby (item.Type != FtpFileSystemObjectType.Directory ? IconReader.GetDescription(System.IO.Path.GetExtension(item.FullName)) : "Directory") ascending select item).ToArray();
+                            break;
+                        case "mod":
+                            currentDisplayItems = (from item in currentDisplayItems orderby item.Modified descending select item).ToArray();
+                            break;
+                        case "-mod":
+                            currentDisplayItems = (from item in currentDisplayItems orderby item.Modified ascending select item).ToArray();
+                            break;
+                        default:
+                            break;
+                    }
+
                     currentDisplayItems = (from item in currentDisplayItems orderby item.FullName select item).ToArray();
                     foreach (var item in currentDisplayItems)
                     {
                         FileDisplayPort.Items.Add(new Item {
                             Icon = item.Type != FtpFileSystemObjectType.Directory ? IconReader.GetFileIcon(System.IO.Path.GetExtension(item.FullName),IconReader.IconSize.Large,false) : IconReader.GetFolderIcon(IconReader.IconSize.Large,IconReader.FolderType.Open) ,
                             Name = item.FullName,
-                            Type = item.Type.ToString(),
+                            Type = item.Type != FtpFileSystemObjectType.Directory ? IconReader.GetDescription(System.IO.Path.GetExtension(item.FullName)) : "Directory",
                             Modified = item.Modified });
                     }
                 }
@@ -104,8 +131,7 @@ namespace RftpUI.pages
             else
             {
                 Download(currentRoot + ((Item)((ListViewItem)e.Source).Content).Name);
-            }
-            
+            }            
         }
 
         private void Download(string path)
@@ -133,7 +159,6 @@ namespace RftpUI.pages
             }
 
             UpdateList();
-
         }
 
         private void Reload_DoubleClick(object sender, MouseButtonEventArgs e)
@@ -159,8 +184,7 @@ namespace RftpUI.pages
 
             }
 
-            UpdateList();
-            
+            UpdateList();            
         }
 
         private void UpdateList()
@@ -168,7 +192,31 @@ namespace RftpUI.pages
             FileDisplayPort.Items.Clear();
             
             currentDisplayItems = client.GetListing(currentRoot);
-            currentDisplayItems = (from item in currentDisplayItems orderby item.FullName select item).ToArray();
+
+            switch (sortby)
+            {
+                case "name":
+                    currentDisplayItems = (from item in currentDisplayItems orderby item.FullName descending select item).ToArray();
+                    break;
+                case "-name":
+                    currentDisplayItems = (from item in currentDisplayItems orderby item.FullName ascending select item).ToArray();
+                    break;
+                case "type":
+                    currentDisplayItems = (from item in currentDisplayItems orderby (item.Type != FtpFileSystemObjectType.Directory ? IconReader.GetDescription(System.IO.Path.GetExtension(item.FullName)) : "Directory") descending select item).ToArray();
+                    break;
+                case "-type":
+                    currentDisplayItems = (from item in currentDisplayItems orderby (item.Type != FtpFileSystemObjectType.Directory ? IconReader.GetDescription(System.IO.Path.GetExtension(item.FullName)) : "Directory") ascending select item).ToArray();
+                    break;
+                case "mod":
+                    currentDisplayItems = (from item in currentDisplayItems orderby item.Modified descending select item).ToArray();
+                    break;
+                case "-mod":
+                    currentDisplayItems = (from item in currentDisplayItems orderby item.Modified ascending select item).ToArray();
+                    break;
+                default:
+                    break;
+            }
+
             FileDisplayPort.Items.Add(new Item { Name = "..", Type = "Parent", Modified = DateTime.Now });
             foreach (var item in currentDisplayItems)
             {
@@ -176,7 +224,7 @@ namespace RftpUI.pages
                 {
                     Icon = item.Type != FtpFileSystemObjectType.Directory ? IconReader.GetFileIcon(System.IO.Path.GetExtension(item.FullName), IconReader.IconSize.Large, false) : IconReader.GetFolderIcon(IconReader.IconSize.Large, IconReader.FolderType.Open),
                     Name = item.FullName,
-                    Type = item.Type.ToString(),
+                    Type = item.Type != FtpFileSystemObjectType.Directory ? IconReader.GetDescription(System.IO.Path.GetExtension(item.FullName)) : "Directory",
                     Modified = item.Modified
                 });
             }           
@@ -185,6 +233,52 @@ namespace RftpUI.pages
         public static string NormalisePath(string path)
         {
             return new Regex(@"\.{2}/.*/(?=\.\.)").Replace(path, "");
+        }
+
+        public void SortingClick(object sender, RoutedEventArgs e)
+        {
+            string column = ((GridViewColumnHeader)e.OriginalSource).Column.Header.ToString();
+
+            switch (column)
+            {
+                case "Name":
+                    if(sortby == "name")
+                    {
+                        sortby = "-name";
+                    }
+                    else
+                    {
+                        sortby = "name";
+                    }
+                    
+                    break;
+                case "Type":
+
+                    if (sortby == "type")
+                    {
+                        sortby = "-type";
+                    }
+                    else
+                    {
+                        sortby = "type";
+                    }
+
+                    break;
+                case "Modified":
+
+                    if (sortby == "mod")
+                    {
+                        sortby = "-mod";
+                    }
+                    else
+                    {
+                        sortby = "mod";
+                    }
+
+                    break;
+            }
+
+            UpdateList();
         }
     }
 

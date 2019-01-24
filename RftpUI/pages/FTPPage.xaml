@@ -24,7 +24,7 @@
         <Rectangle Visibility="Hidden" x:Name="AccDisplay" Fill="#FF505050" Height="50" Width="150" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Row="0" Grid.Column="1"/>
         <Label Visibility="Hidden" Content="Hey" x:Name="DisplayName" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" FontWeight="Bold" FontSize="18"/>
 
-        <ListView x:Name="FileDisplayPort" Visibility="Hidden" Grid.Row="1" Grid.ColumnSpan="2" Background="#FF555555" Foreground="#FFDDDDDD" BorderBrush="#FF222222">
+        <ListView GridViewColumnHeader.Click="SortingClick" x:Name="FileDisplayPort"  Visibility="Hidden" Grid.Row="1" Grid.ColumnSpan="2" Background="#FF555555" Foreground="#FFDDDDDD" BorderBrush="#FF222222">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Name" Width="300">
@@ -37,7 +37,6 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <!--<GridViewColumn Header="Name" Width="150" DisplayMemberBinding="{Binding Name}" />-->
                     <GridViewColumn Header="Type" Width="150" DisplayMemberBinding="{Binding Type}" />
                     <GridViewColumn Header="Modified" Width="150" DisplayMemberBinding="{Binding Modified}" />
                 </GridView>
