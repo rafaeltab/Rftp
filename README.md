@@ -1,2 +1,3 @@
 # Rftp
-Private ftp project
+FTP client
+
