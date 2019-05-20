@@ -11,8 +11,8 @@ namespace RftpLib
     {
         #region conn vars
         private MySqlConnection Conn;
-        private readonly string Username = "root";
-        private readonly string Password = "Fossil2001!";
+        private readonly string Username = "RFTP";
+        private readonly string Password = "3IQcE6mytunZwtvt";
         private readonly string Server = "rafaeltab.tk";
         private readonly string DefaultDB = "Rftp_Database";
         #endregion conn vars
@@ -27,8 +27,7 @@ namespace RftpLib
             {
                 ConsoleManager.Show();
                 Console.WriteLine(e.Message);
-            }
-            
+            }            
         }
 
         public MySqlDataReader ExecuteReturningQuery(string query, Dictionary<string, object> parameters)
@@ -44,9 +43,7 @@ namespace RftpLib
                 command.Parameters.AddWithValue(p.Key, p.Value);
             }
 
-            return command.ExecuteReader();
-            
-            
+            return command.ExecuteReader();           
         }
 
         public void ExecuteNonReturningQuery(string query,Dictionary<string,object> parameters)
@@ -61,8 +58,8 @@ namespace RftpLib
             {
                 command.Parameters.AddWithValue(p.Key, p.Value);
             }
-            command.ExecuteNonQuery();
-            
+
+            command.ExecuteNonQuery();           
         }    
 
         public object ExecuteScalar(string query, Dictionary<string, object> parameters)

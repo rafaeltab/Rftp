@@ -130,7 +130,7 @@ namespace RftpUI.pages
             }
             else
             {
-                Download(currentRoot + ((Item)((ListViewItem)e.Source).Content).Name);
+                Download(((Item)((ListViewItem)e.Source).Content).Name);
             }            
         }
 
@@ -141,11 +141,48 @@ namespace RftpUI.pages
                 FileName = System.IO.Path.GetFileNameWithoutExtension(path),
                 DefaultExt = System.IO.Path.GetExtension(path),
             };
-
+            
             if (sfd.ShowDialog() == true)
             {
-                client.DownloadFile(sfd.FileName, path);
+                foreach (var item in client.GetListing(path.GetFtpDirectoryName()))
+                {
+                    if (item.FullName == path)
+                    {
+                        if (item.Type == FtpFileSystemObjectType.Directory)
+                        {
+                            DownloadDirectory(path, sfd.FileName);
+                            
+                        }
+                        else
+                        {
+                            client.DownloadFile(sfd.FileName, path);
+                        }
+                        break;
+                    }                    
+                }                
             }            
+        }
+
+        private void DownloadDirectory(string basePath, string location)
+        {
+            if (!Directory.Exists(location))
+            {
+                Directory.CreateDirectory(location);
+            }            
+
+            var listings = client.GetListing(basePath);
+
+            foreach (var item in listings)
+            {
+                if (item.Type == FtpFileSystemObjectType.Directory)
+                {
+                    DownloadDirectory(item.FullName, location + item.Name);
+                }
+                else
+                {
+                    client.DownloadFile(item.FullName,location + item.Name);
+                }
+            }
         }
 
         private void Upload_DoubleClick(object sender, MouseButtonEventArgs e)
@@ -279,6 +316,19 @@ namespace RftpUI.pages
             }
 
             UpdateList();
+        }
+
+        private void Download_DoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            
+            var selected = FileDisplayPort.SelectedItems;
+            foreach (var item in selected)
+            {
+                if (!(((Item)item).Type == "Parent"))
+                {
+                    Download(((Item)item).Name);
+                }               
+            }
         }
     }
 
