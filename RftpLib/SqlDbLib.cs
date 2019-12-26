@@ -11,7 +11,7 @@ namespace RftpLib
     {
         #region conn vars
         private MySqlConnection Conn;
-        private readonly string Username = ";
+        private readonly string Username = "";
         private readonly string Password = "";
         private readonly string Server = "";
         private readonly string DefaultDB = "";
