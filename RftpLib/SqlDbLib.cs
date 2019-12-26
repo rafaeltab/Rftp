@@ -11,10 +11,10 @@ namespace RftpLib
     {
         #region conn vars
         private MySqlConnection Conn;
-        private readonly string Username = "RFTP";
-        private readonly string Password = "3IQcE6mytunZwtvt";
-        private readonly string Server = "rafaeltab.tk";
-        private readonly string DefaultDB = "Rftp_Database";
+        private readonly string Username = ";
+        private readonly string Password = "";
+        private readonly string Server = "";
+        private readonly string DefaultDB = "";
         #endregion conn vars
 
         public SqlDbLib()
